@@ -1,29 +1,25 @@
 const express = require("express");
 const protect = require("../middleware/authMiddleware");
-const { getCustomerByMobile } = require("../controllers/customerController");
-
-const {
-  getCustomers,
-  getCustomer,
-  addCustomer,
-  updateCustomer,
-  deleteCustomer,
+const { 
+  getCustomers, 
+  getCustomer, 
+  addCustomer, 
+  updateCustomer, 
+  deleteCustomer, 
+  getCustomerByMobile 
 } = require("../controllers/customerController");
 
 const router = express.Router();
 
-router.use(protect);
+// Define routes
+router.get("/", protect, getCustomers);
+router.post("/", protect, addCustomer);
 
-router.get("/", getCustomers);
+// IMPORTANT: mobile route must be above /:id to prevent conflict
+router.get("/mobile/:mobile", protect, getCustomerByMobile);
 
-router.get("/:id", getCustomer);
-
-router.post("/", addCustomer);
-
-router.put("/:id", updateCustomer);
-
-router.get("/mobile/:mobile", getCustomerByMobile);
-
-router.delete("/:id", deleteCustomer);
+router.get("/:id", protect, getCustomer);
+router.put("/:id", protect, updateCustomer);
+router.delete("/:id", protect, deleteCustomer);
 
 module.exports = router;

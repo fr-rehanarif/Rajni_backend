@@ -200,4 +200,5 @@ module.exports = {
   addCustomer,
   updateCustomer,
   deleteCustomer,
+  getCustomerByMobile,
 };
