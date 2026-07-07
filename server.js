@@ -6,6 +6,7 @@ const pool = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const salesRoutes = require("./routes/salesRoutes");
+const customerRoutes = require("./routes/customerRoutes");
 const app = express();
 
 app.use(cors());
