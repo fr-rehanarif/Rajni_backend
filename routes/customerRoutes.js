@@ -4,26 +4,33 @@ const protect = require("../middleware/authMiddleware");
 const {
   getCustomers,
   getCustomer,
-  addCustomer,
+  createCustomer,
   updateCustomer,
   deleteCustomer,
+  searchCustomers,
 } = require("../controllers/customerController");
 
 const router = express.Router();
 
+// All routes protected
+router.use(protect);
+
 // Get all customers
-router.get("/", protect, getCustomers);
+router.get("/", getCustomers);
+
+// Search customer
+router.get("/search", searchCustomers);
 
 // Get single customer
-router.get("/:id", protect, getCustomer);
+router.get("/:id", getCustomer);
 
-// Add customer
-router.post("/", protect, addCustomer);
+// Create customer
+router.post("/", createCustomer);
 
 // Update customer
-router.put("/:id", protect, updateCustomer);
+router.put("/:id", updateCustomer);
 
 // Delete customer
-router.delete("/:id", protect, deleteCustomer);
+router.delete("/:id", deleteCustomer);
 
 module.exports = router;
