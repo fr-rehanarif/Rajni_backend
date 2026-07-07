@@ -1,5 +1,6 @@
 const express = require("express");
 const protect = require("../middleware/authMiddleware");
+const { getCustomerByMobile } = require("../controllers/customerController");
 
 const {
   getCustomers,
@@ -20,6 +21,8 @@ router.get("/:id", getCustomer);
 router.post("/", addCustomer);
 
 router.put("/:id", updateCustomer);
+
+router.get("/mobile/:mobile", getCustomerByMobile);
 
 router.delete("/:id", deleteCustomer);
 

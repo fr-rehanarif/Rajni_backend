@@ -131,6 +131,39 @@ const updateCustomer = async (req, res) => {
   }
 };
 
+const getCustomerByMobile = async (req, res) => {
+  try {
+    const { mobile } = req.params;
+    
+    // Querying Supabase/PostgreSQL for the customer
+    const result = await pool.query(
+      "SELECT * FROM customers WHERE mobile = $1", 
+      [mobile]
+    );
+
+    // If no customer is found, we send a 404 so the frontend 
+    // knows to treat this as a "New Customer"
+    if (result.rows.length === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Customer not found" 
+      });
+    }
+
+    // Return the customer object
+    res.json({
+      success: true,
+      customer: result.rows[0]
+    });
+  } catch (error) {
+    console.error("Error fetching customer:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: error.message 
+    });
+  }
+};
+
 const deleteCustomer = async (req, res) => {
   try {
     const { id } = req.params;
